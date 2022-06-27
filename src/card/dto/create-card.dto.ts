@@ -1,5 +1,4 @@
 export class CreateCardDto {
-    readonly name: string;
-    readonly desc: string;
-    readonly idList: string;
+    readonly title: string;
+    readonly order: number;
 }

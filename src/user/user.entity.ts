@@ -1,30 +1,32 @@
 import { IsEmail } from "class-validator";
-import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import * as argon2 from 'argon2';
 import { CardEntity } from "src/card/card.entity";
+import { Column, Entity, PrimaryColumn, JoinColumn, OneToMany } from "typeorm";
 
 @Entity('user')
 export class UserEntity {
     
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column()
+    @PrimaryColumn()
+    uuid: string;
+    
+    @Column({
+        unique: true
+    })
     username: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     @IsEmail()
     email: string;
 
     @Column()
     password: string;
 
-    @BeforeInsert()
-    async hashPassword() {
-        this.password = await argon2.hash(this.password);
-    }
+    @Column()
+    board_title: string;
 
-    @OneToMany(type => CardEntity, card => card.author)
+    @OneToMany(type => CardEntity, card => card.owner, {eager: true})
+    @JoinColumn()
     cards: CardEntity[];
 
 }

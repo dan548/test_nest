@@ -1,8 +1,6 @@
 import { Controller } from '@nestjs/common';
 import {
-    ApiBearerAuth,
-    ApiResponse,
-    ApiOperation, ApiTags,
+    ApiBearerAuth, ApiTags,
 } from '@nestjs/swagger';
 import { CardService } from './card.service';
 

@@ -1,2 +1,2 @@
-export { CreateCardDto } from './create-card.dto';
-export { CreateCommentDto } from './create-comment';
+export * from './create-card.dto';
+export * from './create-comment.dto';

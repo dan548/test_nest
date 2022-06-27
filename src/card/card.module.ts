@@ -1,7 +1,18 @@
-import { MiddlewareConsumer, NestModule } from "@nestjs/common";
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { UserEntity } from "src/user/user.entity";
+import { CardEntity } from "./card.entity";
+import { CardService } from "./card.service";
+import { CommentEntity } from "./comment.entity";
 
-export class CardModule implements NestModule {
-    public configure(consumer: MiddlewareConsumer) {
-        consumer
-    }
+@Module({
+    imports: [
+        TypeOrmModule.forFeature([UserEntity, CardEntity, CommentEntity])
+    ],
+    providers: [
+        CardService
+    ]
+})
+export class CardModule {
+    
 }
