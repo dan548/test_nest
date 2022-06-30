@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { CardModule } from './card/card.module';
+import { RouterModule } from '@nestjs/core';
+import { appRoutes } from './app.routes';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -9,11 +10,11 @@ import { CardModule } from './card/card.module';
       type: 'better-sqlite3',
       database: ':memory:',
       dropSchema: true,
-      entities: ["src/**/*.entity.ts"],
+      entities: ["dist/**/*.entity.js"],
       synchronize: true,
     }),
-    UserModule,
-    CardModule
+    AuthModule,
+    RouterModule.register(appRoutes)
   ]
 })
 export class AppModule {}

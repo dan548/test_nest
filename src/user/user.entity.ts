@@ -1,11 +1,12 @@
 import { IsEmail } from "class-validator";
-import { CardEntity } from "src/card/card.entity";
-import { Column, Entity, PrimaryColumn, JoinColumn, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BoardEntity } from "./board/board.entity";
+import { CardEntity } from "./board/card/card.entity";
 
 @Entity('user')
 export class UserEntity {
     
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     uuid: string;
     
     @Column({
@@ -22,11 +23,15 @@ export class UserEntity {
     @Column()
     password: string;
 
-    @Column()
-    board_title: string;
+    @OneToOne(type => BoardEntity, board => board.owner, {
+        eager: true
+    })
+    board: BoardEntity;
 
-    @OneToMany(type => CardEntity, card => card.owner, {eager: true})
-    @JoinColumn()
+    @OneToMany(type => CardEntity, card => card.author, {
+        eager: true
+    })
+    @JoinColumn({referencedColumnName: 'author_id'})
     cards: CardEntity[];
 
 }

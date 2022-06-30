@@ -57,15 +57,13 @@ export class UserService {
           
       // create new user
       let newUser = new UserEntity();
-      newUser.uuid = crypto.randomUUID();
       newUser.username = username;
       newUser.email = email;
       newUser.password = password;
-      newUser.cards = [];
           
       const errors = await validate(newUser);
       if (errors.length > 0) {
-        const _errors = {username: 'Userinput is not valid.'};
+        const _errors = {username: 'User input is not valid.'};
         throw new HttpException({message: 'Input data validation failed', _errors}, HttpStatus.BAD_REQUEST);
       } else {
         const savedUser = await this.userRepository.save(newUser);
@@ -89,8 +87,7 @@ export class UserService {
       const userResponse = {
           uuid: user.uuid,
           username: user.username,
-          email: user.email,
-          board_title: user.board_title
+          email: user.email
       };
 
       return {user: userResponse}
